@@ -15,24 +15,24 @@ app.Configure(config =>
         .WithExample("setup");
 
     config.AddCommand<FsCommand>("fs")
-        .WithDescription("Display basic repository filesystem info such as files count, files size, etc.")
+        .WithDescription("Display basic repository filesystem info such as dirs/files count, files size, etc.")
         .WithExample("fs")
         .WithExample("fs", "--path", "path/to/repository");
 
     config.AddCommand<LanguagesCommand>("langs")
-        .WithDescription("Display detailed repository languages statistics")
+        .WithDescription("Display detailed repository languages statistic")
         .WithExample("langs")
         .WithExample("langs", "--path", "path/to/repository")
         .WithExample("langs", "--ignore-extra-langs")
         .WithExample("langs", "--fetch-latest");
 
     config.AddCommand<TreeCommand>("tree")
-        .WithDescription("Shows repository filesystem tree")
+        .WithDescription("Show repository filesystem tree")
         .WithExample("tree")
         .WithExample("tree", "--path", "path/to/repository");
 
     config.AddCommand<GitCommand>("git")
-        .WithDescription("Shows repository git info")
+        .WithDescription("Show repository git info")
         .WithExample("git")
         .WithExample("git", "--path", "path/to/repository")
         .WithExample("git", "--branch", "branchname");
