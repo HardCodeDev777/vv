@@ -1,3 +1,5 @@
+[![Release](https://github.com/HardCodeDev777/vv/actions/workflows/release.yml/badge.svg)](https://github.com/HardCodeDev777/vv/actions/workflows/release.yml)
+
 # vv
 
 Tool that gives you a clear, terminal-friendly view of your repositories — file trees, language stats, and more, right from the CLI.
