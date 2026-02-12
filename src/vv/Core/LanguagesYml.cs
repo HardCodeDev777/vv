@@ -1,18 +1,23 @@
-﻿using vv.Utils;
+﻿using vv.CLI;
+using vv.Utils;
 using YamlDotNet.RepresentationModel;
 
 namespace vv.Core;
 
 internal static class LanguagesYml
 {
-    public static string LangsFilePath => 
-        Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "languages.yml");
+    private const string DOWNLOAD_URL = 
+        "https://raw.githubusercontent.com/github-linguist/linguist/refs/heads/main/lib/linguist/languages.yml";
     private static Color DefaultColorIfNotFound => Color.FromHex("#383c42");
+
     private static readonly HashSet<string> IgnoredExtraLangs = new()
     {
-        "Markdown", "MSBuild", "YAML", "Visual Studio Solution", 
+        "Markdown", "MSBuild", "YAML", "Visual Studio Solution",
         "Plain Text", "TOML", "XAML", "JSON", "XML", "SVG"
     };
+
+    public static string LangsFilePath => 
+        Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "languages.yml");
 
     public static Dictionary<LangData, string> GetLangsColors(List<LangData> langsDatas, bool ignoreExtra)
     {
@@ -50,7 +55,7 @@ internal static class LanguagesYml
     {
         if (File.Exists(LangsFilePath)) File.Delete(LangsFilePath);
 
-        var newFileBytes = await HttpUtils.DownloadFileBytes("https://raw.githubusercontent.com/github-linguist/linguist/refs/heads/main/lib/linguist/languages.yml");
+        var newFileBytes = await HttpUtils.DownloadFileBytes(DOWNLOAD_URL);
 
         File.WriteAllBytes(LangsFilePath, newFileBytes);
     }

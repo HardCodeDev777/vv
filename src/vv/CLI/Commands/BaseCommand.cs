@@ -1,4 +1,5 @@
-﻿using vv.Core;
+﻿using vv.CLI;
+using vv.CLI.Rendering;
 
 internal abstract class BaseCommand<TSettings> : Command<TSettings> where TSettings : CommandSettings
 {
@@ -11,23 +12,15 @@ internal abstract class BaseCommand<TSettings> : Command<TSettings> where TSetti
         }
         catch (UserException e)
         {
-            WriteError(e.Message);
+            DefaultRendering.WriteError(e.Message);
             return 1;
         }
         catch (Exception e)
         {
-            WriteError(e.Message);
+            DefaultRendering.WriteError(e.Message);
             return 2;
         }
     }
 
     protected abstract int ExecuteImpl(TSettings settings);
-
-    protected static void WriteError(Exception exception) =>
-        AnsiConsole.WriteException(exception);
-
-    protected static void WriteError(string message) =>
-        AnsiConsole.MarkupLine($"[red]Error: {Markup.Escape(message)}[/]");
-
-    protected static void WriteSuccess(string message) => AnsiConsole.MarkupLine($"[green]{Markup.Escape(message)}[/]");
 }

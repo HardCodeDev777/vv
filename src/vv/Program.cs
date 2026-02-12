@@ -8,19 +8,21 @@ app.Configure(config =>
 {
     config.SetApplicationCulture(new("en-US"));
     config.SetApplicationName("vv");
-    config.SetApplicationVersion("0.1.0");
+
+    // Don't forget to change version before new tag
+    config.SetApplicationVersion("0.1.1");
 
     config.AddCommand<SetupCommand>("setup")
         .WithDescription("Setup vv before usage")
         .WithExample("setup");
 
     config.AddCommand<FsCommand>("fs")
-        .WithDescription("Display basic repository filesystem info such as dirs/files count, files size, etc.")
+        .WithDescription("Display basic repository filesystem info")
         .WithExample("fs")
         .WithExample("fs", "--path", "path/to/repository");
 
     config.AddCommand<LanguagesCommand>("langs")
-        .WithDescription("Display detailed repository languages statistic")
+        .WithDescription("Display detailed repository languages stats")
         .WithExample("langs")
         .WithExample("langs", "--path", "path/to/repository")
         .WithExample("langs", "--ignore-extra-langs")

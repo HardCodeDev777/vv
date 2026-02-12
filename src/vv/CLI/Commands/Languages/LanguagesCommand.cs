@@ -25,8 +25,8 @@ internal sealed class LanguagesCommand : BaseAsyncCommand<LanguagesSettings>
             ctx.Status("Parsing tokei output...");
             var langsData = Tokei.ParseLanguageData(jsonOutput);
 
-            ctx.Status("Running founded languages from languages.yml ...");
-            fullLangsData = LanguagesYml.GetLangsColors(langsData, settings.IgnoreDocsLangs);
+            ctx.Status("Getting founded languages colors from languages.yml ...");
+            fullLangsData = LanguagesYml.GetLangsColors(langsData, settings.IgnoreExtraLangs);
         });
 
         AnsiConsole.WriteLine();

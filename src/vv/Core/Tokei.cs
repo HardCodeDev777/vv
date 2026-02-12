@@ -7,7 +7,6 @@ internal readonly record struct LangData(string Name, long CodeCount, long Comme
 
 internal static class Tokei
 {
-
     public static async Task<bool> CheckIfTokeiInstalled()
     {
         var psi = new ProcessStartInfo

@@ -1,4 +1,5 @@
-﻿using vv.CLI.Settings;
+﻿using vv.CLI.Rendering;
+using vv.CLI.Settings;
 using vv.Core;
 
 namespace vv.CLI.Commands;
@@ -12,9 +13,9 @@ internal class SetupCommand : BaseAsyncCommand<SetupSettings>
         {
             var installed = await Tokei.CheckIfTokeiInstalled();
             if (installed)
-                AnsiConsole.MarkupLine("[green]All required dependencies are satisfied![/]");
+                DefaultRendering.WriteSuccess("All required dependencies are satisfied!");
             else
-                WriteError("Install tokei and add it to PATH");
+                DefaultRendering.WriteError("Install Tokei and add it to PATH");
         }
 
         if (AnsiConsole.Confirm("Do you want to locate folder for repositories?"))
@@ -23,11 +24,11 @@ internal class SetupCommand : BaseAsyncCommand<SetupSettings>
                 .Replace("\"", "");
 
             if (string.IsNullOrEmpty(path))
-                WriteError("Path cannot be empty");
+                DefaultRendering.WriteError("Path cannot be empty");
             
             SetupHandle.WriteSetupToJson(new(path));
 
-            AnsiConsole.MarkupLine($"[dim white]Settings were written to {SetupHandle.SetupFilePath}![/]");
+            DefaultRendering.WriteSuccess($"Settings were written to {SetupHandle.SetupFilePath}!");
         }
 
         return 0;

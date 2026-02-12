@@ -6,7 +6,7 @@ internal class LanguagesSettings : BaseSettings
 
     [CommandOption("--ignore-extra-langs")]
     [Description("Ignore extra languages like Markdown, JSON, MSBuild, etc.")]
-    public bool IgnoreDocsLangs { get; init; }
+    public bool IgnoreExtraLangs { get; init; }
 
     [CommandOption("--fetch-latest")]
     [Description("Delete old \"languages.yml\" and download new from official repository")]
