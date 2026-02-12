@@ -24,18 +24,4 @@ internal static class SetupHandle
 
         return JsonUtils.ReadFromJson<SetupData>(SetupFilePath);
     }
-
-    public static List<string> GetRepositoriesNamesFromSetup()
-    {
-        var repositories = new List<string>();  
-
-        var setup = ReadSetupFromJson();
-
-        foreach(var folder in Directory.EnumerateDirectories(setup.RepositoriesFolder))
-        {
-            if (Repository.IsValid(folder)) repositories.Add(Path.GetFileName(folder));
-        }
-
-        return repositories;
-    }
 }
