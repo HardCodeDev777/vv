@@ -1,4 +1,5 @@
 ﻿using LibGit2Sharp;
+using System.Runtime.InteropServices;
 using vv.Core;
 
 namespace vv.tests;
@@ -8,7 +9,10 @@ public class AdvancedEnumerateTest
     [Fact]
     public void TestEnumerate()
     {
-        var root = Directory.CreateTempSubdirectory().FullName;
+        var tempPath = Directory.CreateTempSubdirectory().FullName;
+        var root = RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
+            ? Path.GetFullPath(new Uri(tempPath).LocalPath)
+            : tempPath;
 
         try
         {
