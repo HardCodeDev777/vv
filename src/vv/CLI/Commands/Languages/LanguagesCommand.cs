@@ -20,16 +20,13 @@ internal sealed class LanguagesCommand : BaseAsyncCommand<LanguagesSettings>
             }
 
             ctx.Status("Running tokei...");
-            await Tokei.ManageProcess(repoPath, !settings.DisrespectGitIgnore);
+            var jsonOutput = await Tokei.ManageProcess(repoPath, !settings.DisrespectGitIgnore);
 
             ctx.Status("Parsing tokei output...");
-            var langsData = Tokei.ParseLanguageData();
+            var langsData = Tokei.ParseLanguageData(jsonOutput);
 
             ctx.Status("Running founded languages from languages.yml ...");
             fullLangsData = LanguagesYml.GetLangsColors(langsData, settings.IgnoreDocsLangs);
-
-            ctx.Status("Deleting cache...");
-            Tokei.DeleteGeneratedCache();
         });
 
         AnsiConsole.WriteLine();

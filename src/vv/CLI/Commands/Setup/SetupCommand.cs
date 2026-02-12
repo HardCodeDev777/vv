@@ -12,7 +12,7 @@ internal class SetupCommand : BaseAsyncCommand<SetupSettings>
         {
             var installed = await Tokei.CheckIfTokeiInstalled();
             if (installed)
-                AnsiConsole.MarkupLine("[green]Every required dependencies are satisfied![/]");
+                AnsiConsole.MarkupLine("[green]All required dependencies are satisfied![/]");
             else
                 WriteError("Install tokei and add it to PATH");
         }
@@ -27,7 +27,7 @@ internal class SetupCommand : BaseAsyncCommand<SetupSettings>
             
             SetupHandle.WriteSetupToJson(new(path));
 
-            AnsiConsole.MarkupLine($"[dim white]Settings were written to {SetupHandle.SetupFileName}![/]");
+            AnsiConsole.MarkupLine($"[dim white]Settings were written to {SetupHandle.SetupFilePath}![/]");
         }
 
         return 0;

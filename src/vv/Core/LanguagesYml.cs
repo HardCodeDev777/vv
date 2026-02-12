@@ -5,7 +5,7 @@ namespace vv.Core;
 
 internal static class LanguagesYml
 {
-    private static string LangsFileName => 
+    public static string LangsFilePath => 
         Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "languages.yml");
     private static Color DefaultColorIfNotFound => Color.FromHex("#383c42");
     private static readonly HashSet<string> IgnoredExtraLangs = new()
@@ -16,10 +16,10 @@ internal static class LanguagesYml
 
     public static Dictionary<LangData, string> GetLangsColors(List<LangData> langsDatas, bool ignoreExtra)
     {
-        var yamlString = File.ReadAllText(LangsFileName);
+        var yamlString = File.ReadAllText(LangsFilePath);
 
         if (string.IsNullOrEmpty(yamlString))
-            throw new UserException($"Couldn't find {LangsFileName}!");
+            throw new UserException($"Couldn't find {LangsFilePath}!");
 
         var yaml = new YamlStream();
         using var reader = new StringReader(yamlString);
@@ -48,10 +48,10 @@ internal static class LanguagesYml
 
     public static async Task UpdateLanguagesYmlFile()
     {
-        if (File.Exists(LangsFileName)) File.Delete(LangsFileName);
+        if (File.Exists(LangsFilePath)) File.Delete(LangsFilePath);
 
         var newFileBytes = await HttpUtils.DownloadFileBytes("https://raw.githubusercontent.com/github-linguist/linguist/refs/heads/main/lib/linguist/languages.yml");
 
-        File.WriteAllBytes(LangsFileName, newFileBytes);
+        File.WriteAllBytes(LangsFilePath, newFileBytes);
     }
 }

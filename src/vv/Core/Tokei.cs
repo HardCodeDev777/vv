@@ -7,8 +7,6 @@ internal readonly record struct LangData(string Name, long CodeCount, long Comme
 
 internal static class Tokei
 {
-    private static string OutputFileName => 
-        Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "langs_stats.json");
 
     public static async Task<bool> CheckIfTokeiInstalled()
     {
@@ -37,21 +35,21 @@ internal static class Tokei
         return true;
     }
 
-    public static async Task ManageProcess(string path, bool respectIgnore)
+    public static async Task<string> ManageProcess(string path, bool respectIgnore)
     {
         var respectString = respectIgnore ? string.Empty : "--no-ignore";
 
-        var psi = new ProcessStartInfo()
+        var psi = new ProcessStartInfo
         {
-            FileName = "cmd.exe",
-            Arguments = $"/c tokei \"{path}\" {respectString} -o json > {OutputFileName} -e *.d",
-            RedirectStandardError = true,
+            FileName = "tokei",
+            Arguments = $"\"{path}\" {respectString} -o json -e *.d",
             RedirectStandardOutput = true,
+            RedirectStandardError = true,
             UseShellExecute = false,
             CreateNoWindow = true
         };
 
-       using var process = Process.Start(psi);
+        using var process = Process.Start(psi);
 
         var stdoutTask = process.StandardOutput.ReadToEndAsync();
         var stderrTask = process.StandardError.ReadToEndAsync();
@@ -62,13 +60,12 @@ internal static class Tokei
         if (process.ExitCode != 0)
             throw new Exception($"Tokei process exited with error! Logs: {stderrTask.Result}");
 
-        return;
+        return stdoutTask.Result;
     }
 
-    public static List<LangData> ParseLanguageData()
+    public static List<LangData> ParseLanguageData(string tokeiOutput)
     {
-        var json = File.ReadAllText(OutputFileName);
-        var root = JsonNode.Parse(json).AsObject();
+        var root = JsonNode.Parse(tokeiOutput).AsObject();
 
         var languages = new List<LangData>();
 
@@ -84,7 +81,4 @@ internal static class Tokei
 
         return languages;
     }
-
-    public static void DeleteGeneratedCache() => File.Delete(OutputFileName);
-    
 }
