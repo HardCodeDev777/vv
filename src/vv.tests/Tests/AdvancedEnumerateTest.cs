@@ -9,10 +9,14 @@ public class AdvancedEnumerateTest
     [Fact]
     public void TestEnumerate()
     {
-        var tempPath = Directory.CreateTempSubdirectory().FullName;
-        var root = RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
-            ? Path.GetFullPath(new Uri(tempPath).LocalPath)
-            : tempPath;
+        var tempDir = Directory.CreateTempSubdirectory();
+        var root = tempDir.FullName;
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+        {
+            root = Path.GetFullPath(new DirectoryInfo(tempDir.FullName).FullName);
+            if (!root.StartsWith("/private"))
+                root = "/private" + root;
+        }
 
         try
         {
