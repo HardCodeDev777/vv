@@ -4,17 +4,17 @@ description: 'Install Tokei on Windows, Linux and Mac'
 runs:
   using: 'composite'
   steps:
-    - name: Install Tokei (Linux)
+    - name: Install Tokei
       shell: bash
-      if: runner.os == 'Linux'
-      run: sudo apt-get update && sudo apt-get install -y tokei
-
-    - name: Install Tokei (macOS)
-      shell: bash
-      if: runner.os == 'macOS'
-      run: brew install tokei
-
-    - name: Install Tokei (Windows)
-      shell: pwsh
-      if: runner.os == 'Windows'
-      run: winget install XAMPPRocky.tokei --accept-source-agreements --accept-package-agreements
+      run: |
+        case "$RUNNER_OS" in
+          Linux)
+            sudo apt-get update && sudo apt-get install -y tokei
+            ;;
+          macOS)
+            brew install tokei
+            ;;
+          Windows)
+            choco install tokei --no-progress
+            ;;
+        esac
