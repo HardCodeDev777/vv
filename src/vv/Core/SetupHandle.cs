@@ -7,22 +7,22 @@ internal readonly record struct SetupData(string RepositoriesFolder);
 
 internal static class SetupHandle
 {
-    public static string SetupFileName => 
+    public static string SetupFilePath => 
         Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), "settings.json");
 
     public static void WriteSetupToJson(SetupData data)
     {
-        if (File.Exists(SetupFileName)) File.Delete(SetupFileName);
+        if (File.Exists(SetupFilePath)) File.Delete(SetupFilePath);
 
-        JsonUtils.WriteToJson(data, SetupFileName); 
+        JsonUtils.WriteToJson(data, SetupFilePath); 
     }
 
     public static SetupData ReadSetupFromJson()
     {
-        if (!File.Exists(SetupFileName))
-            throw new Exception($"{SetupFileName} not found!");
+        if (!File.Exists(SetupFilePath))
+            throw new Exception($"{SetupFilePath} not found!");
 
-        return JsonUtils.ReadFromJson<SetupData>(SetupFileName);
+        return JsonUtils.ReadFromJson<SetupData>(SetupFilePath);
     }
 
     public static List<string> GetRepositoriesNamesFromSetup()

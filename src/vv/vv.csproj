@@ -6,7 +6,6 @@
 	
 	<SelfContained>true</SelfContained>
 	<PublishSingleFile>true</PublishSingleFile>
-	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	
 	<InvariantGlobalization>false</InvariantGlobalization>
 	
@@ -33,6 +32,10 @@
   <PackageReference Include="LibGit2Sharp" Version="0.31.0" />
   <PackageReference Include="Spectre.Console.Cli" Version="0.53.1" />
   <PackageReference Include="YamlDotNet" Version="16.3.0" />
+</ItemGroup>
+
+<ItemGroup>
+	<InternalsVisibleTo Include="vv.tests"/>
 </ItemGroup>
 
 </Project>

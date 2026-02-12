@@ -1,3 +1,4 @@
+[![Test](https://github.com/HardCodeDev777/vv/actions/workflows/test.yml/badge.svg)](https://github.com/HardCodeDev777/vv/actions/workflows/test.yml)
 [![Release](https://github.com/HardCodeDev777/vv/actions/workflows/release.yml/badge.svg)](https://github.com/HardCodeDev777/vv/actions/workflows/release.yml)
 
 # vv

@@ -1,0 +1,37 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - 'main' 
+  pull_request:
+    branches:
+      - '**' 
+  workflow_dispatch:
+  workflow_call:
+
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install Tokei
+      uses: ./.github/actions/install-tokei
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+  
+    - name: Restore dependencies
+      run: dotnet restore src/vv.sln
+
+    - name: Test
+      run: dotnet test src/vv.sln --no-restore
