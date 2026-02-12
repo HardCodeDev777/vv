@@ -1,20 +1,19 @@
 name: 'Install Tokei'
-description: 'Install Tokei on Windows, Linux and Mac'
+description: 'Install Tokei on Windows, Linux and Mac using Cargo'
 
 runs:
   using: 'composite'
   steps:
-    - name: Install Tokei
+    - name: Install Tokei via Cargo
       shell: bash
       run: |
-        case "$RUNNER_OS" in
-          Linux)
-            sudo apt-get update && sudo apt-get install -y tokei
-            ;;
-          macOS)
-            brew install tokei
-            ;;
-          Windows)
-            choco install tokei --no-progress
-            ;;
-        esac
+        if ! command -v tokei &> /dev/null; then
+          echo "Tokei not found, installing..."
+          cargo install tokei
+        else
+          echo "Tokei is already installed."
+        fi
+
+    - name: Verify Installation
+      shell: bash
+      run: tokei --version
