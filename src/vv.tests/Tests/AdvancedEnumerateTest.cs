@@ -11,6 +11,8 @@ public class AdvancedEnumerateTest
     {
         var tempDir = Directory.CreateTempSubdirectory();
         var root = tempDir.FullName;
+
+        // Duck mac
         if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
         {
             root = Path.GetFullPath(new DirectoryInfo(tempDir.FullName).FullName);
