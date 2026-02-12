@@ -3,7 +3,7 @@ using vv.Core;
 
 namespace vv.tests;
 
-public class SetupTest
+public class RepositoriesHandleTest
 {
     [Fact]
     public void TestGettingRepos()
@@ -17,7 +17,7 @@ public class SetupTest
             var reposFolderPath = Directory.GetParent(root).FullName;
             SetupHandle.WriteSetupToJson(new(reposFolderPath));
 
-            var reposNames = SetupHandle.GetRepositoriesNamesFromSetup();
+            var reposNames = RepositoriesHandle.GetRepositoriesNamesFromSetup();
 
             Assert.Contains(Path.GetFileName(root), reposNames);
         }

@@ -11,7 +11,7 @@ internal static class ResolvePath
         var repoPath = settings.RepoPath;
         if (string.IsNullOrEmpty(repoPath))
         {
-            var reposNames = SetupHandle.GetRepositoriesNamesFromSetup();
+            var reposNames = RepositoriesHandle.GetRepositoriesNamesFromSetup();
 
             if (reposNames.Count == 0)
                 throw new UserException(
