@@ -48,3 +48,8 @@ Show more info about a command:
 ```shell
 vv langs -h
 ```
+---
+
+# License
+
+Licensed under the MIT License.
